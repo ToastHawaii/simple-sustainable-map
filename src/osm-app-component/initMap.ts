@@ -36,7 +36,7 @@ import { createOverPassLayer, shareLink } from "./createOverPassLayer";
 
 import BigNumber from "bignumber.js";
 import "leaflet/dist/leaflet.css";
-import "leaflet-overpass-layer/dist/OverPassLayer.css";
+import "./leaflet-overpass-layer/OverPassLayer.css";
 import "./style.scss";
 import "details-element-polyfill";
 
