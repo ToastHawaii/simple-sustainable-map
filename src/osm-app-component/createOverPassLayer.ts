@@ -33,7 +33,7 @@ import {
   extractStreet,
 } from "./data";
 import { textTruncate } from "./utilities/string";
-import "./leaflet-overpass-layer";
+import "leaflet-overpass-layer";
 import { delay } from "./utilities/data";
 import { TFunction } from "i18next";
 

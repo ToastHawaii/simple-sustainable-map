@@ -24,7 +24,6 @@ export function OverPassLayer<M>({
   const map = useMap();
 
   useEffect(() => {
-
     let removed = false;
     const layer = createOverPassLayer(
       filter.group,
