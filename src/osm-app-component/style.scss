@@ -261,6 +261,28 @@ table.osm-data {
   overflow: auto;
   padding-right: 34px;
 
+  > a:first-of-type {
+    border-top: none;
+  }
+  
+  > .filter {
+    background: white;
+
+    &:first-of-type {
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+
+      .filter-label {
+        border-top: none;
+      }
+    }
+
+    &:last-child {
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
+    }
+  }
+
   .right-collapse {
     background: white;
     width: 30px;

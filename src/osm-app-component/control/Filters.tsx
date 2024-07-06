@@ -17,6 +17,60 @@ export type Filter = {
   tags: string[];
 };
 
+function FilterElement({
+  filter: f,
+  onInfo,
+  offers,
+  onActivate,
+  onDeactivate,
+}: {
+  filter: Filter;
+  onInfo: (filter: Filter) => void;
+  offers: string[];
+  onActivate: (filter: Filter) => void;
+  onDeactivate: (filter: Filter) => void;
+}) {
+  const { t } = useTranslation();
+
+  return (
+    <React.Fragment key={`${f.group}/${f.value}`}>
+      <a
+        title={t("type." + f.value + ".name")}
+        href={`?offers=${f.group}/${f.value}&info=${f.group}/${f.value}`}
+        onClick={(e) => {
+          e.preventDefault();
+          onInfo(f);
+        }}
+      >
+        <i className="fas fa-info-circle"></i>
+      </a>
+      <label className={"filter filter-" + f.group + "-" + f.value}>
+        <input
+          value={`${f.group}/${f.value}`}
+          type="checkbox"
+          checked={offers.includes(`${f.group}/${f.value}`)}
+          onChange={(e) => {
+            if (e.currentTarget.checked) {
+              onActivate(f);
+            } else {
+              onDeactivate(f);
+            }
+          }}
+        />
+        <div className="filter-background"></div>
+        <div className="filter-label">
+          <img
+            className={`${f.value}-icon`}
+            src={f.icon}
+            alt={t("type." + f.value + ".name")}
+          />{" "}
+          <span>{t("type." + f.value + ".name")}</span>
+        </div>
+      </label>
+    </React.Fragment>
+  );
+}
+
 export function Filters({
   onOpen,
   onClose,
@@ -75,57 +129,41 @@ export function Filters({
             <i className="fas fa-times"></i>
           </div>
         ) : null}
-        {Object.keys(groups).map((k) => {
-          const group = groups[k];
-          const count = offers.filter((o) => o.startsWith(k + "/")).length;
-          return (
-            <details key={k}>
-              <summary>
-                <span className="count">{count ? `(${count})` : ""}</span>
-                {t("group." + k)}
-              </summary>
-              {group
-                .filter((g) => !g.subgroup)
-                .map((f) => (
-                  <React.Fragment key={`${k}/${f.value}`}>
-                    <a
-                      title={t("type." + f.value + ".name")}
-                      href={`?offers=${k}/${f.value}&info=${k}/${f.value}`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        onInfo(f);
-                      }}
-                    >
-                      <i className="fas fa-info-circle"></i>
-                    </a>
-                    <label className={"filter filter-" + k + "-" + f.value}>
-                      <input
-                        value={`${k}/${f.value}`}
-                        type="checkbox"
-                        checked={offers.includes(`${k}/${f.value}`)}
-                        onChange={(e) => {
-                          if (e.currentTarget.checked) {
-                            onActivate(f);
-                          } else {
-                            onDeactivate(f);
-                          }
-                        }}
+        {Object.keys(groups).length > 1
+          ? Object.keys(groups).map((k) => {
+              const group = groups[k];
+              const count = offers.filter((o) => o.startsWith(k + "/")).length;
+              return (
+                <details key={k}>
+                  <summary>
+                    <span className="count">{count ? `(${count})` : ""}</span>
+                    {t("group." + k)}
+                  </summary>
+                  {group
+                    .filter((g) => !g.subgroup)
+                    .map((f) => (
+                      <FilterElement
+                        filter={f}
+                        offers={offers}
+                        onActivate={onActivate}
+                        onDeactivate={onDeactivate}
+                        onInfo={onInfo}
                       />
-                      <div className="filter-background"></div>
-                      <div className="filter-label">
-                        <img
-                          className={`${f.value}-icon`}
-                          src={f.icon}
-                          alt={t("type." + f.value + ".name")}
-                        />{" "}
-                        <span>{t("type." + f.value + ".name")}</span>
-                      </div>
-                    </label>
-                  </React.Fragment>
-                ))}
-            </details>
-          );
-        })}
+                    ))}
+                </details>
+              );
+            })
+          : filterOptions
+              .filter((g) => !g.subgroup)
+              .map((f) => (
+                <FilterElement
+                  filter={f}
+                  offers={offers}
+                  onActivate={onActivate}
+                  onDeactivate={onDeactivate}
+                  onInfo={onInfo}
+                />
+              ))}
       </div>
     </>
   );
