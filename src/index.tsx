@@ -126,7 +126,7 @@ function Intro() {
           i18nKey="intro.license"
           components={{
             l: (
-              <a href="https://github.com/ToastHawaii/sustainable-map/blob/master/LICENSE" />
+              <a href="https://github.com/ToastHawaii/sustainable-map/blob/main/LICENSE" />
             ),
             c: <a href="https://github.com/ToastHawaii/sustainable-map" />,
           }}
