@@ -117,7 +117,7 @@ function Intro() {
           i18nKey="intro.osm"
           components={{
             o: <a href="https://www.openstreetmap.org" />,
-            e: <a href="#" className="edit" />,
+            e: <a href="https://www.openstreetmap.org/edit" className="edit" />,
           }}
         ></Trans>
       </p>
